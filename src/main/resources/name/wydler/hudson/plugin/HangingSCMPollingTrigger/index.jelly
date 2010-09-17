@@ -1,0 +1,39 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    <l:layout title="${it.displayName}">
+        <l:header/>
+        <l:side-panel>
+            <l:tasks>
+                <l:task icon="images/24x24/up.gif" href=".." title="${%Back to List}"/>
+            </l:tasks>
+        </l:side-panel>
+        <l:main-panel>
+            <p>${%The following polling activities exceed the} ${%StarvationThreshold}</p>
+            <p>${%StarvationThreshold} = ${it.starvationThreshold}</p>
+            <table id="runners" class="sortable pane bigtable">
+              <tr>
+                <th initialSortDir="down">${%Job}</th>
+                <th>${%Log}</th>
+                <th>${%Running for}</th>
+                <th>${%Interrupt}</th>
+              </tr>
+              <j:forEach var="runner" items="${it.HangingScmTriggerRunners}">
+                <tr>
+                  <td>
+                    <a href="${rootURL}/${runner.target.url}">${runner.target.displayName}</a>
+                  </td> 
+                  <td>
+                    <a href="${rootURL}/${runner.target.url}scmPollLog/">${runner.target.displayName} Polling Log</a>
+                  </td>
+                  <td>
+                    ${runner.duration}
+                  </td>
+                  <td>
+                    <a href="interrupt?job=${runner.target.name}">${%Interrupt}</a>
+                  </td>
+                </tr>
+              </j:forEach>
+            </table>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
