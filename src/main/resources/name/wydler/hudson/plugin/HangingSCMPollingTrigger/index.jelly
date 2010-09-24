@@ -16,20 +16,26 @@
                 <th>${%Log}</th>
                 <th>${%Running for}</th>
                 <th>${%Interrupt}</th>
+                <th>${%Threads}</th>
               </tr>
-              <j:forEach var="runner" items="${it.HangingScmTriggerRunners}">
+              <j:forEach var="runnerWithThreads" items="${it.HangingScmTriggerRunners}">
                 <tr>
                   <td>
-                    <a href="${rootURL}/${runner.target.url}">${runner.target.displayName}</a>
+                    <a href="${rootURL}/${runnerWithThreads.runner.target.url}">${runnerWithThreads.runner.target.displayName}</a>
                   </td> 
                   <td>
-                    <a href="${rootURL}/${runner.target.url}scmPollLog/">${runner.target.displayName} Polling Log</a>
+                    <a href="${rootURL}/${runnerWithThreads.runner.target.url}scmPollLog/">${runnerWithThreads.runner.target.displayName} Polling Log</a>
                   </td>
                   <td>
-                    ${runner.duration}
+                    ${runnerWithThreads.runner.duration}
                   </td>
                   <td>
-                    <a href="interrupt?job=${runner.target.name}">${%Interrupt}</a>
+                    <a href="interrupt?job=${runnerWithThreads.runner.target.name}">${%Interrupt}</a>
+                  </td>
+                  <td>
+                      <j:forEach var="t" items="${runnerWithThreads.threads}">
+                          <p>${t.name}</p>
+                      </j:forEach>
                   </td>
                 </tr>
               </j:forEach>
